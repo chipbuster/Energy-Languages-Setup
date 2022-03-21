@@ -50,6 +50,8 @@ is complete, it will have the framework code in order to allow the following:
   of Ubuntu 16.10, downloading the runtimes from a single source to avoid
   issues with SSL expiry.
 - A Dockerfile to build a Docker image for the benchmarks.
+- (Possible extension) Modified Ubuntu 16.10 image which can be directly installed
+  with all languages already present.
 - (Possible extension) Installation of language compilers/runtimes with more
   modern versions, onto an Ubuntu 22.04-based system.
 
