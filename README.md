@@ -6,7 +6,8 @@ paper published by the Green Software Lab.[^1]
 
 ### Rationale and Background
 
-The Energy Languages benchmark is becoming more commonly cited, for example, in
+The Energy Languages benchmark is becoming more commonly cited in discussions
+about choosing programming languages, for example, in
 [this article about crypto efficiency](https://cryptomode.com/c-is-the-most-energy-efficient-and-fastest-programming-language-study-finds/)
 or [this AWS announcement about switching to Rust](https://aws.amazon.com/blogs/opensource/sustainability-with-rust/).
 
@@ -25,13 +26,14 @@ several users, including the current maintainer of the CLBG, Issac Gouy, have
 speculated that [the TypeScript results may contain a typo](https://www.reddit.com/r/rust/comments/szpgau/russ_cox_on_sustainability_with_rust_post_by_aws/hy8bino).
 
 Why have there been so few replications? One reason might be because energy usage
-requires bare-metal installation, as [Docker and virtualization are known to
-cause increases in energy usage](https://www.sciencedirect.com/science/article/abs/pii/S0164121218301456)
+measurement requires bare-metal installation, as [Docker and virtualization are
+known to cause increases in energy
+usage](https://www.sciencedirect.com/science/article/abs/pii/S0164121218301456).
 Another reason, however, might simply be that installing the software needed for
 the benchmark is highly nontrivial. The paper tested approximately 30 language
-implementations, most of which are not available in the OS repositories, and many
-which are installed at nonstandard paths. In addition (to the best of my knowledge)
-there is not an installation script or image provided by the authors.
+implementations, most of which are not available in the OS repositories, and
+many which are installed at nonstandard paths. In addition, (to the best of my
+knowledge) there is not an installation script or image provided by the authors.
 
 Adding to the difficulties, many of the original implementations which were used
 in the paper are either no longer available or are very difficult to find, and
@@ -59,55 +61,69 @@ older versions of Ubuntu first.)
 
 This is a table of languages used in the paper and the version used. I am targeting
 the original 2017 paper---no new languages (e.g. Julia) or updated versions.
-The first two columns come from [the project website's setup page](https://sites.google.com/view/energy-efficiency-languages/setup?authuser=0)
+The first two columns come from [the project website's setup page](https://sites.google.com/view/energy-efficiency-languages/setup?authuser=0).
 The last column of the table tells you how the language is installed in these scripts:
 
 - "Repository" indicates that the version in the system repositories matched what
   was used in the paper.
-- "Binary" indicates a binary installation from the upstream source site. This
-  is the preferred method where it is available.
+- "Binary" indicates a binary installation of the appropriate version from the
+  upstream source site. Due to reproducibility concerns when compiling from source,
+  this is the preferred method when available.
 - "Source" indicates that the binary builds were not available. Instead, the
   source code for the appropriate version is downloaded and compiled with
   as-close-to-default compilation flags as possible.
 - Any other entry indicates that the exact version of the software was unavailable:
   see the "Known Mismatches" sections for details.
 
-| Language   | Paper Version          | Repo Version     |
-| ---------- | ---------------------- | ---------------- |
-| Ada        | GNAT 6.2.0             | Repository       |
-| C          | gcc 6.2.0              | Repository       |
-| C#         | dotnet 1.0.1           | Binary           |
-| C++        | g++ 6.2.0              | Repository       |
-| Chapel     | chpl 1.15.0            | Source           |
-| Dart       | Dart VM 1.24.0-dev.0.0 | Binary           |
-| Erlang     | Erlang 7.3.1.2         | Repository       |
-| F#         | dotnet 1.0.1           | Binary           |
-| Fortran    | ifort 17.0.3           | Latest OneAPI    |
-| Go         | go go1.6.3             | Repository       |
-| Hack       | HipHop VM 3.19.2       | Source           |
-| Haskell    | ghc 8.0.2              | Binary           |
-| Java       | jdk 1.8.0_121          | License issues   |
-| JavaScript | node 7.9.0             | Binary           |
-| Jruby      | jruby 9.1.7.0          | Binary           |
-| Lisp       | SBCL 1.3.3debian       | Repository       |
-| Lua        | Lua 5.3.3              | Source           |
-| OCaml      | ocamlopt 4.05.0        | Source           |
-| Pascal     | fpc 3.0.2              | Binary           |
-| Perl       | perl 5.24.0            | Source           |
-| PHP        | php 7.1.4              | Source           |
-| Python     | python 3.5.2           | Repository       |
-| Racket     | raco 6.8               | Binary           |
-| Ruby       | ruby 2.4.1             | Source           |
-| Rust       | rustc 1.16.0           | Binary           |
-| Swift      | swift 4.0-dev          | 4.2.4-Release    |
-| TypeScript | node 7.9.0             | Typescript 2.3.1 |
+| Language   | Paper Version          | Repo Version         |
+| ---------- | ---------------------- | -------------------- |
+| Ada        | GNAT 6.2.0             | Repository           |
+| C          | gcc 6.2.0              | Repository           |
+| C#         | dotnet 1.0.1           | Binary               |
+| C++        | g++ 6.2.0              | Repository           |
+| Chapel     | chpl 1.15.0            | Source               |
+| Dart       | Dart VM 1.24.0-dev.0.0 | Binary               |
+| Erlang     | Erlang 7.3.1.2         | Repository           |
+| F#         | dotnet 1.0.1           | Binary               |
+| Fortran    | ifort 17.0.3           | **Latest OneAPI**    |
+| Go         | go go1.6.3             | Repository           |
+| Hack       | HipHop VM 3.19.2       | Source               |
+| Haskell    | ghc 8.0.2              | Binary               |
+| Java       | jdk 1.8.0_121          | **License issues**   |
+| JavaScript | node 7.9.0             | Binary               |
+| Jruby      | jruby 9.1.7.0          | Binary               |
+| Lisp       | SBCL 1.3.3debian       | Repository           |
+| Lua        | Lua 5.3.3              | Source               |
+| OCaml      | ocamlopt 4.05.0        | Source               |
+| Pascal     | fpc 3.0.2              | Binary               |
+| Perl       | perl 5.24.0            | Source               |
+| PHP        | php 7.1.4              | Source               |
+| Python     | python 3.5.2           | Repository           |
+| Racket     | raco 6.8               | Binary               |
+| Ruby       | ruby 2.4.1             | Source               |
+| Rust       | rustc 1.16.0           | Binary               |
+| Swift      | swift 4.0-dev          | **4.2.4-Release**    |
+| TypeScript | node 7.9.0             | **Typescript 2.3.1** |
 
 #### Known Mismatches
 
-Licensing restrictions prevent me from distributing the appropriate Java runtime,
-or from acquiring the version of ifort used in the paper. The user will need to
-acquire and install Java themselves. `ifort` has been replaced with the version
-offered by the Intel OneAPI HPC pack.
+##### Java
+
+Licensing restrictions prevent me from distributing the appropriate Java runtime.
+Instructions are provided on how to obtain the appropriate Java runtimes.
+
+##### Fortran
+
+Comments on the Intel Community Forums suggest that, without an Intel Parallel
+Studio XE paid support plan, Intel will not provide binaries for ifort 17.0.6
+anymore. Presumably, this policy also applies to the older 17.0.3 used by the
+paper. `ifort` has been replaced with the version offered by the Intel OneAPI
+HPC pack.
+
+Installation of the OneAPI HPC pack is scripted, but will still require
+interaction from the user.
+
+##### Swift
 
 The version of Swift that was used for this paper appears to have been a nightly
 alpha build. Unfortunately, those binaries are no longer available on
@@ -120,7 +136,9 @@ what commit a nonexistent branch might have been pointing to on a specific day
 in 2017, I have instead substituted the 4.2 release Swift, which is the earliest
 binary build for Swift which is still generally available.
 
-Finally, the authors list "node 7.9.0" as the version of TypeScript used, which
+##### TypeScript
+
+The authors list "node 7.9.0" as the version of TypeScript used, which
 doesn't actually tell us anything about what version of `tsc` was used. Looking
 at release history, the first version of Typescript to be released after Node 7.9.0
 was Typescript 2.3.1, so I am using that as a guess for the TS compiler version.
