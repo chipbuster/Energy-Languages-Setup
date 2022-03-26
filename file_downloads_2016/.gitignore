@@ -1,4 +1,4 @@
-*.tar.*
-*.zip
-*.sh
 *.tar
+*.tar.*
+*.sh
+*.zip
