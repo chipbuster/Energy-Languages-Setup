@@ -1,3 +1,4 @@
+import ssl
 import urllib.request
 import os.path
 import hashlib
@@ -8,6 +9,13 @@ download_folder = "downloads"
 
 # Spoof a curl client so that some websites don't immediately 403 us
 default_header = {"user-agent": "curl/7.82.0", "accept": "*/*"}
+
+# Define a context where we disable host checking for SSL certificates. Host
+# checking fails on Ubuntu 16.10 and is irrelevant for this script because
+# we validate the SHA256 hash of the file anyways.
+default_ssl_ctx = ssl.create_default_context()
+default_ssl_ctx.check_hostname = False
+default_ssl_ctx.verify_mode = ssl.CERT_NONE
 
 # Taken from https://stackoverflow.com/a/44873382/2914377
 def sha256sum(filename):
@@ -33,7 +41,7 @@ class DownloadTarget(object):
         req = urllib.request.Request(self.url)
         for (k, v) in default_header.items():
             req.add_header(k, v)
-        response = urllib.request.urlopen(req)
+        response = urllib.request.urlopen(req, context=default_ssl_ctx)
         data = response.read()
         with open(self.fname, "wb") as f:
             f.write(data)
@@ -47,11 +55,11 @@ class DownloadTarget(object):
     def get_with_info(self):
         self.download_file()
         if not self.validate_file():
-            print(f"Validation error for file {self.fname}")
-            print(f"\t Expected hash: {self.hash}")
-            print(f"\t   Actual hash: {self.download_hash()}")
+            print("Validation error for file " + self.fname)
+            print("\t Expected hash: " + self.hash)
+            print("\t   Actual hash: " + self.download_hash())
         else:
-            print(f"Successfully downloaded + validated file {self.fname}")
+            print("Successfully downloaded + validated file " + self.fname)
 
 
 targets = [
