@@ -7,17 +7,18 @@ arch=('x86_64')
 pkgdesc="Haskell for Energy Languages"
 url="https://www.haskell.org/ghc/"
 depends=()
-#source=('ghc-8.0.2-x86_64-deb8-linux.tar.xz')
-#sha256sums=('5ee68290db00ca0b79d57bc3a5bdce470de9ce9da0b098a7ce6c504605856c8f')
+source=('ghc-8.0.2-x86_64-deb8-linux.tar.xz')
+noextract=('ghc-8.0.2-x86_64-deb8-linux.tar.xz')
+sha256sums=('5ee68290db00ca0b79d57bc3a5bdce470de9ce9da0b098a7ce6c504605856c8f')
 
 build() {
     tar xf ghc-8.0.2-x86_64-deb8-linux.tar.xz
     cd ghc-8.0.2
-    ./configure --prefix="${pkgdir}/usr/local/src/ghc-8.0.2/"
+    ./configure --prefix="/usr/local/src/ghc-8.0.2/"
 }
 
 package() {
     cd ghc-8.0.2
     mkdir -p "${pkgdir}/usr/local/src/ghc-8.0.2/"
-    make install
+    make prefix="${pkgdir}/usr/local/src/ghc-8.0.2/" install
 }
