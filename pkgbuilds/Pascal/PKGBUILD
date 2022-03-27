@@ -1,0 +1,21 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-pascal
+pkgver=3.0.2
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="Pascal for Energy Languages"
+url="https://www.freepascal.org/"
+depends=()
+source=('fpc-3.0.2.x86_64-linux.tar')
+sha256sums=('b5b27fdbc31b1d05b6a898f3c192d8a5083050562b29c19eb9eb018ba4482bd8')
+
+build() {
+    return 0
+}
+
+package() {
+    mkdir -p "${pkgdir}/usr/local/src/fpc-3.0.2.x86_64-linux"
+    cd "${srcdir}/fpc-3.0.2.x86_64-linux"
+    echo -e "${pkgdir}/usr/local/src/fpc-3.0.2.x86_64-linux\n\n\n\n\n\n\n" | ./install.sh
+}
