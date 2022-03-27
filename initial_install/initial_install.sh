@@ -44,13 +44,12 @@ function perform_general_setup(){
                                   binutils fakeroot file libarchive-tools lsb-release python3-apt bsdtar zstd jq
 
     # Install makedeb to ease management of packages
-    tar xf v11.0.1-1-stable.tar.gz
     pushd makedeb-11.0.1-1-stable || exit 1
     make prepare
     sudo make package
 
     # Set parallelism to max available
-    echo "MAKEFLAGS=-j$(nproc)" >> sudo tee -a /etc/makepkg.conf
+    echo "MAKEFLAGS=-j$(nproc)" | sudo tee -a /etc/makepkg.conf
     popd || exit 1
     rm -rf makedeb-11.0.1-1-stable/
 }

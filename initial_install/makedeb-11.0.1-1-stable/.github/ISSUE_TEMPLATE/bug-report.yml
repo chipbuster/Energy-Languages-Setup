@@ -1,0 +1,47 @@
+---
+name: Bug report
+description: Issues with makedeb, makepkg, packaging, etc.
+labels: [bug]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Prenote
+        Some of the fields in this form will ask for information from your installation of makedeb. You can obtain the needed info with the following command:
+        ```sh
+        makedeb --version
+        ```
+
+        ---
+
+  - type: textarea
+    attributes:
+      label: Issue
+    validations:
+      required: true
+
+  - type: dropdown
+    attributes:
+      label: Installation source
+      options:
+        - APT Repository
+        - makedeb Package Repository (MPR)
+    validations:
+      required: true
+
+  - type: dropdown
+    attributes:
+      label: Installed release type
+      options:
+        - Stable
+        - Beta
+        - Alpha
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Installed makedeb version
+    validations:
+      required: true
