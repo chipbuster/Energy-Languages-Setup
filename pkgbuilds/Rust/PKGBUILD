@@ -1,0 +1,21 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-rust
+pkgver=1.16.0
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="Rust for Energy Languages"
+url="https://www.rust-lang.org/"
+depends=()
+source=('rust-1.16.0-x86_64-unknown-linux-gnu.tar.gz')
+sha256sums=('48621912c242753ba37cad5145df375eeba41c81079df46f93ffb4896542e8fd')
+
+build() {
+    return 0
+}
+
+package() {
+    cd "${srcdir}/rust-1.16.0-x86_64-unknown-linux-gnu"
+    mkdir -p "${pkgdir}/usr/local/src/rust-1.16.0"
+    ./install.sh  --prefix=/usr/local/src/rust-1.16.0 --destdir="${pkgdir}/usr/local/src/rust-1.16.0"
+}
