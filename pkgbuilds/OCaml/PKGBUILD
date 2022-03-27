@@ -1,0 +1,23 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-ocaml
+pkgver=4.05.0
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="OCaml for Energy Languages"
+url="https://ocaml.org"
+depends=()
+source=('ocaml-4.05.0.tar.gz')
+sha256sums=('e5d8a6f629020c580473d8afcfcb06c3966d01929f7b734f41dc0c737cd8ea3f')
+
+build() {
+    cd "${srcdir}/ocaml-4.05.0"
+    ./configure --prefix /usr
+    make ${MAKEFLAGS} world
+}
+
+package() {
+    cd "${srcdir}/ocaml-4.05.0"
+    mkdir -p "${pkgdir}/usr"
+    make prefix="${pkgdir}/usr" install
+}
