@@ -52,7 +52,6 @@ function perform_general_setup(){
     # Set parallelism to max available
     echo "MAKEFLAGS=-j$(nproc)" | sudo tee -a /etc/makepkg.conf
     popd || exit 1
-    rm -rf makedeb-11.0.1-1-stable/
 }
 
 if [[ ! -f "/etc/os-release" ]]; then
