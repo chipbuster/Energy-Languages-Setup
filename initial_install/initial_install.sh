@@ -45,7 +45,7 @@ function perform_general_setup(){
 
     # Install makedeb to ease management of packages
     tar xf v11.0.1-1-stable.tar.gz
-    pushd  || exit 1
+    pushd makedeb-11.0.1-1-stable || exit 1
     make prepare
     sudo make package
 
