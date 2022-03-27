@@ -1,0 +1,23 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-lua
+pkgver=5.3.3
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="Lua for Energy Languages"
+url="https://www.lua.org"
+depends=()
+source=('lua-5.3.3.tar.gz')
+sha256sums=('5113c06884f7de453ce57702abaac1d618307f33f6789fa870e87a59d772aca2')
+
+build() {
+    cd "${srcdir}/lua-5.3.3"
+    make ${MAKEFLAGS} linux
+}
+
+package() {
+    installdir="${pkgdir}/usr/local/src/lua-5.3.3/bin"
+    mkdir -p "${installdir}"
+    cp "${srcdir}/lua-5.3.3/src/lua" "${installdir}"
+    cp "${srcdir}/lua-5.3.3/src/luac" "${installdir}"
+}
