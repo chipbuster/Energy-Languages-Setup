@@ -6,7 +6,8 @@ pkgrel=1
 arch=('x86_64')
 pkgdesc="Chapel for Energy Languages"
 url="https://chapel-lang.org/docs/1.15/usingchapel/QUICKSTART.html"
-source=('chapel-1.15.0.tar.gz')  # From https://github.com/chapel-lang/chapel/releases/download/1.15.0/chapel-1.15.0.tar.gz
+# https://github.com/chapel-lang/chapel/releases/download/1.15.0/chapel-1.15.0.tar.gz
+source=('chapel-1.15.0.tar.gz')  
 sha256sums=('c7549124d90504027212a99176635b215ab11c12eadc995e89e7d019529d796f')
 
 build() {
@@ -16,5 +17,6 @@ build() {
 }
 
 package() {
+    mkdir "${pkgdir}/usr/local/src/"
     mv "${srcdir}" "${pkgdir}/usr/local/src/chapel-1.15.0"
 }
