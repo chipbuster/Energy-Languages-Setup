@@ -1,0 +1,22 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-swift
+pkgver=4.2.4
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="Swift for Energy Languages"
+url="https://developer.apple.com/swift/"
+depends=()
+# https://download.swift.org/swift-4.2.4-release/ubuntu1604/swift-4.2.4-RELEASE/swift-4.2.4-RELEASE-ubuntu16.04.tar.gz
+source=('swift-4.2.4-RELEASE-ubuntu16.04.tar.gz')
+sha256sums=('e00c9c13875239aae4b0c8f9fa6fc8df8285568d318c13c5fe67fef883e9cabd')
+
+build() {
+    return 0
+}
+
+package() {
+    mkdir -p "${pkgdir}/usr/local/src/"
+    mv "${srcdir}/swift-4.2.4-RELEASE-ubuntu16.04"\
+       "${pkgdir}/usr/local/src/swift-2017-04-13-a-ubuntu16.10"
+}
