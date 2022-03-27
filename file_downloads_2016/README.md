@@ -9,15 +9,8 @@ the 2017 version of the paper. It downloads all the tarballs needed by the
 ## Obtain Files by Running Script
 
 In order to obtain the files by direct download, run `python3 download_files.py`.
-This will download and checksum the necessary files into the `downloads` folder
-in this directory.
-
-It may be possible to run this script from within a copy of Ubuntu 16.10.
-However, due to issues with aging SSL certificate stores and host verification,
-it may not be possible to successfully download the files successfully from
-Ubuntu 16.10. If this is the case, I recommend downloading the files from a
-modern OS, and then copying this entire repository over to the target system
-on a USB stick (its size should not exceed 1GiB).
+This will download and checksum the necessary files into the appropriate pkgbuild
+directory (`../pkgbuilds/<LANGNAME>` relative to this directory.)
 
 ## Obtain files by download
 
