@@ -3,7 +3,7 @@
 set -Ee
 
 # Values to expose to makepkg.
-declare -rx PKGEXT='.pkg.tar.zst'
+declare -rx PKGEXT='.pkg.tar.gz'
 
 # Other variables.
 declare INSTALL='FALSE'

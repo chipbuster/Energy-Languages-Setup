@@ -21,7 +21,7 @@ fakeroot_build() {
     rm "${package}" -rf
     mkdir "${package}"
 
-    package_filename="${package}-${pkgver}-${CARCH}.pkg.tar.zst"
+    package_filename="${package}-${pkgver}-${CARCH}.pkg.tar.gz"
     tar -xf "../${package_filename}" -C "${package}/"
     rm "../${package_filename}"
 
