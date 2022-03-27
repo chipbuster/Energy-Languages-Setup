@@ -32,6 +32,7 @@ function perform_general_setup(){
     sudo apt install --assume-yes vim git curl wget build-essential python3-pip python3 valgrind asciidoctor
 
     # Install makedeb to ease management of packages
+    curl --location --remote-name --insecure https://github.com/makedeb/makedeb/archive/refs/tags/v11.0.1-1-stable.tar.gz
 
     if ! echo "44844c2fbdc0fc70203f6cefe65ae6badd240b841f77ba6e4d28c884e0c4c28a  v11.0.1-1-stable.tar.gz" | sha256sum --check; then
         echo "Cannot validate makedeb download: sha256 checksum failed"
