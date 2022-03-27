@@ -1,0 +1,20 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-racket
+pkgver=6.8
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="Racket for Energy Languages"
+url="https://racket-lang.org/"
+depends=()
+# https://download.racket-lang.org/installers/6.8/racket-6.8-x86_64-linux.sh
+source=('racket-6.8-x86_64-linux.sh')
+sha256sums=('96fea14fd482bdee0ab128f962f7c38cad6528e14acd483da41e5603ed40a8a7')
+
+build() {
+    return 0
+}
+
+package() {
+    echo -e "yes\n${pkgdir}/usr/local/src/racket-6.8" | sudo sh "$scriptname"
+}
