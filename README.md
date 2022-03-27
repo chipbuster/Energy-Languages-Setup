@@ -4,7 +4,7 @@ This repository setup code for the [Energy Languages](https://github.com/greenso
 with the goal of providing as similar an environment as possible to the 2017
 paper published by the Green Software Lab.[^1]
 
-### Rationale and Background
+## Rationale and Background
 
 The Energy Languages benchmark is becoming more commonly cited in discussions
 about choosing programming languages, for example, in
@@ -107,12 +107,16 @@ The last column of the table tells you how the language is installed in these sc
 | Swift      | swift 4.0-dev          | **4.2.4-Release**    |
 | TypeScript | node 7.9.0             | **Typescript 2.3.1** |
 
-#### Known Mismatches
+### Known Mismatches
 
 ##### Java
 
-Licensing restrictions prevent me from distributing the appropriate Java runtime.
-Instructions are provided on how to obtain the appropriate Java runtimes.
+License agreements restrict me from distributing the appropriate Java runtime.
+In order to obtain it, go to https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html
+and search for "8u121". Then download the file named "jdk-8u121-linux-x64.tar.gz".
+
+Place this file in the `Java` directory of the installers and run `makedeb -si`
+to install the Java runtimes.
 
 ##### Fortran
 
@@ -123,7 +127,8 @@ paper. `ifort` has been replaced with the version offered by the Intel OneAPI
 HPC pack.
 
 Installation of the OneAPI HPC pack is scripted, but will still require
-interaction from the user.
+interaction from the user. It also requires an active internet connection, since
+the OneAPI installers actively download material over the internet.
 
 ##### Swift
 
@@ -144,5 +149,21 @@ The authors list "node 7.9.0" as the version of TypeScript used, which
 doesn't actually tell us anything about what version of `tsc` was used. Looking
 at release history, the first version of Typescript to be released after Node 7.9.0
 was Typescript 2.3.1, so I am using that as a guess for the TS compiler version.
+
+## Notes for Ubuntu 16.10 Installation
+
+Due to SSL certificate expiry, the version of Firefox that comes with Ubuntu 16.10
+can no longer access all of GitHub: specifically, the ability to view files or
+download ZIPs/git repositories no longer works.
+
+If you wish, you can record the URL needed to download this repository via
+HTTPS and manually enter it into a `git clone` command on the machine.
+Alternatively, you may consider downloading the newest version of Firefox from
+www.firefox.com and using that to access the internet instead.
+
+In general, `wget` and `curl` may noy be able to successfully verify certificates
+on 16.10. All scripts and programs in this repository avoid this issue by
+disabling SSL verification and relying on SHA256 hashes of the downloaded files
+to ensure that nothing has been tampered with.
 
 [^1]: "Energy Efficiency across Programming Languages: How does Energy, Time and Memory Relate?", Rui Pereira, Marco Couto, Francisco Ribeiro, Rui Rua, Jácome Cunha, João Paulo Fernandes, and João Saraiva. In Proceedings of the 10th International Conference on Software Language Engineering (SLE '17)
