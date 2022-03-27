@@ -1,0 +1,24 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-ruby
+pkgver=2.4.1
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+    pkgdesc="Ruby for Energy Languages"
+url="https://www.ruby-lang.org/"
+depends=()
+source=('ruby-2.4.1.tar.xz')
+sha256sums=('4fc8a9992de3e90191de369270ea4b6c1b171b7941743614cc50822ddc1fe654')
+
+build() {
+    cd "${srcdir}/ruby-2.4.1"
+    ./configure --prefix="/usr/local/src/ruby"
+    make ${MAKEFLAGS}
+}
+
+package() {
+    installdir="${pkgdir}/usr/local/src/ruby"
+    mkdir -p "${installdir}"
+    cd "${srcdir}/ruby-2.4.1"
+    make DESTDIR="$installdir" install
+}
