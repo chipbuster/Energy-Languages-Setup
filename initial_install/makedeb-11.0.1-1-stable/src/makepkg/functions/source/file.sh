@@ -101,7 +101,7 @@ extract_file() {
 	local ext=${file##*.}
 	local cmd=''
 	case "$file_type" in
-		*application/x-tar*||*application/x-cpio*)
+		*application/x-tar*|*application/x-cpio*)
 			cmd="bsdtar" ;;
 		*application/x-gzip*|*application/gzip*)
 			case "$ext" in
