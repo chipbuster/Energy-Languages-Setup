@@ -41,7 +41,8 @@ function perform_1610_setup(){
 function perform_general_setup(){
     # Install general prerequisites for what we're about to do
     sudo apt install --assume-yes vim git curl wget build-essential python3-pip python3 valgrind asciidoctor\
-                                  binutils fakeroot file libarchive-tools lsb-release python3-apt bsdtar zstd jq
+                                  binutils fakeroot file libarchive-tools lsb-release python3-apt bsdtar zstd\
+                                  cmake jq
 
     # Install makedeb to ease management of packages
     pushd makedeb-11.0.1-1-stable || exit 1

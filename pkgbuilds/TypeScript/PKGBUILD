@@ -7,18 +7,14 @@ arch=('x86_64')
 pkgdesc="Typescript for Energy Languages"
 url="https://www.typescriptlang.org/"
 depends=('energy-languages-javascript')
-source=('ts-2.3.1-nm.tar.xz')
-sha256sums=('73fe5fe8cb0ea8b758d26dda4753d28c2a0828f4706d2c040eb5355b2c798d9c')
+source=('typescript-2.3.1.tgz')
+sha256sums=('f3232e83869048f340e6ec438d6e0e0169f1213524d1eba7da9385b3f00dcc86')
 
 build() {
     return 0
 }
 
 package() {
-    # Uses a pre-downloaded version of typescript in case the source is not available
-    # in the future. If you would like to download it yourself, simply run
-    # `npm install -g typescript@2.3.1`
-
-    mkdir -p "${pkgdir}/usr/local/src/node-v7.9.0-linux-x64/lib"
-    mv "${srcdir}/node_modules" "${pkgdir}/usr/local/src/node-v7.9.0-linux-x64/lib"
+    PATH="/usr/local/src/node-v7.9.0-linux-x64/bin:$PATH"
+    npm install -g --prefix "$pkgdir"/usr "$srcdir"/typescript-2.3.1.tgz
 }

@@ -1,6 +1,6 @@
 # Maintainer: Kevin Song <k c s o n g at utexas dot edu>
 pkgname=energy-languages-dart
-pkgver="1.24.0_dev.0.0"
+pkgver="1.24.0"
 pkgrel="1"
 #makedepends=('build-essential')
 arch=('x86_64')

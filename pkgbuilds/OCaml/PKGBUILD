@@ -19,5 +19,5 @@ build() {
 package() {
     cd "${srcdir}/ocaml-4.05.0"
     mkdir -p "${pkgdir}/usr"
-    make prefix="${pkgdir}/usr" install
+    make DESTDIR="${pkgdir}" install
 }

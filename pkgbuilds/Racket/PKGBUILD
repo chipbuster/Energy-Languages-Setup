@@ -16,5 +16,5 @@ build() {
 }
 
 package() {
-    echo -e "yes\n${pkgdir}/usr/local/src/racket-6.8" | sudo sh "$scriptname"
+    echo -e "yes\n${pkgdir}/usr/local/src/racket-6.8\nyes\n" | sh "racket-6.8-x86_64-linux.sh"
 }

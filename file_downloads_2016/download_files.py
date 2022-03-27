@@ -141,6 +141,11 @@ targets = [
         "b5b27fdbc31b1d05b6a898f3c192d8a5083050562b29c19eb9eb018ba4482bd8",
         "https://downloads.sourceforge.net/project/freepascal/Linux/3.0.2/fpc-3.0.2.x86_64-linux.tar?ts=gAAAAABiNqyqJ-rKWKDERLIN7kEGe_fEFqRllTIll0r4AbTB9kAFSZDfIeCI-0mZO_Jj_FSmpnRcd_W_EV8m43QmILXjtzCFzg%3D%3D&r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Ffreepascal%2Ffiles%2FLinux%2F3.0.2%2Ffpc-3.0.2.x86_64-linux.tar%2Fdownload",
     ),
+    DownloadTarget(
+        "TypeScript",
+        "f3232e83869048f340e6ec438d6e0e0169f1213524d1eba7da9385b3f00dcc86",
+        "http://registry.npmjs.org/typescript/-/typescript-2.3.1.tgz",
+    ),
 ]
 
 if __name__ == "__main__":
