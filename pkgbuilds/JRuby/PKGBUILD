@@ -1,0 +1,20 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-jruby
+pkgver=9.1.7.0
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="JRuby for Energy Languages"
+url="https://www.jruby.org/"
+depends=()
+source=('jruby-dist-9.1.7.0-bin.tar.gz')
+sha256sums=('95ac7d2316fb7698039267265716dd2159fa5b49f0e0dc6e469c80ad59072926')
+
+build() {
+    return 0
+}
+
+package() {
+    mkdir -p "${pkgdir}/usr/local/src"
+    cp -rf "${srcdir}/jruby-9.1.7.0" "${pkgdir}/usr/local/src"
+}
