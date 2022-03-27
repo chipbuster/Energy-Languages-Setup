@@ -1,0 +1,21 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-javascript
+pkgver=7.9.0
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="NodeJS for Energy Languages"
+url="https://nodejs.org/en"
+depends=()
+source=('node-v7.9.0-linux-x64.tar.xz')
+sha256sums=('d8910cf0dd90be84c07df179512cf2e36659a92726e67e8dc8bc8b457fe6e5ee')
+
+build() {
+    return 0
+}
+
+package() {
+    cd ${srcdir}
+    mkdir -p "${pkgdir}/usr/local/src"
+    cp -r node-v7.9.0-linux-x64 "${pkgdir}/usr/local/src"
+}
