@@ -101,7 +101,7 @@ extract_file() {
 	local ext=${file##*.}
 	local cmd=''
 	case "$file_type" in
-		*application/x-tar*|*application/zip*|*application/x-zip*|*application/x-cpio*)
+		*application/x-tar*||*application/x-cpio*)
 			cmd="bsdtar" ;;
 		*application/x-gzip*|*application/gzip*)
 			case "$ext" in
@@ -123,6 +123,8 @@ extract_file() {
 				zst) cmd="zstd" ;;
 				*) return;;
 			esac ;;
+		*application/zip*|*application/x-zip*)
+			cmd="unzip" ;;
 		*)
 			# See if bsdtar can recognize the file
 			if bsdtar -tf "$file" -q '*' &>/dev/null; then
@@ -136,6 +138,8 @@ extract_file() {
 	msg2 "$(gettext "Extracting %s with %s")" "$file" "$cmd"
 	if [[ $cmd = "bsdtar" ]]; then
 		$cmd -xf "$file" || ret=$?
+	elif [[ $cmd = "unzip" ]]; then
+		$cmd -o "$file" || ret=$?
 	else
 		rm -f -- "${file%.*}"
 		$cmd -dcf -- "$file" > "${file%.*}" || ret=$?
