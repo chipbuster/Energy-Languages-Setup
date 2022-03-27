@@ -1,0 +1,24 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-dart
+pkgver="1.24.0_dev.0.0"
+pkgrel="1"
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="Dart for Energy Languages"
+url="https://dart.dev/"
+depends=()
+# https://storage.googleapis.com/dart-archive/channels/dev/release/1.24.0-dev.0.0/sdk/dartsdk-linux-x64-release.zip
+source=('dartsdk-linux-x64-release.zip')
+sha256sums=('3da8070567601b89a9b8235eddaae13c66415abbedc8aea2d405670228b03d8f')
+
+build() {
+    return 0 # Binary package: no build required
+}
+
+package() {
+    mkdir "${pkgdir}/usr"
+    cp -r "${srcdir}/dart-sdk/bin" "${pkgdir}/usr"
+    cp -r "${srcdir}/dart-sdk/include" "${pkgdir}/usr"
+    cp -r "${srcdir}/dart-sdk/lib" "${pkgdir}/usr"
+    cp -r "${srcdir}/dart-sdk/util" "${pkgdir}/usr"
+}
