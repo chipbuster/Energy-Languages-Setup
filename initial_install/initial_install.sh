@@ -25,6 +25,7 @@ function perform_1610_setup(){
     make -j "$(nproc)"
     sudo make install
     popd || exit 1
+    rm -rf bash-5.1.16
 
     # Makedeb also requires a modern version of bsdtar (repo version is too old)
     # Compile and install that as well.
@@ -34,19 +35,24 @@ function perform_1610_setup(){
     make -j "$(nproc)"
     sudo make install
     popd || exit 1
+    rm -rf libarchive-3.6.0
 }
 
 function perform_general_setup(){
     # Install general prerequisites for what we're about to do
     sudo apt install --assume-yes vim git curl wget build-essential python3-pip python3 valgrind asciidoctor\
-                                  binutils fakeroot file libarchive-tools lsb-release python3-apt bsdtar zstd
+                                  binutils fakeroot file libarchive-tools lsb-release python3-apt bsdtar zstd jq
 
     # Install makedeb to ease management of packages
     tar xf v11.0.1-1-stable.tar.gz
-    pushd makedeb-11.0.1-1-stable/ || exit 1
+    pushd  || exit 1
     make prepare
     sudo make package
+
+    # Set parallelism to max available
+    echo "MAKEFLAGS=-j$(nproc)" >> sudo tee -a /etc/makepkg.conf
     popd || exit 1
+    rm -rf makedeb-11.0.1-1-stable/
 }
 
 if [[ ! -f "/etc/os-release" ]]; then
