@@ -10,16 +10,10 @@ fi
 function perform_1610_setup(){
     sudo sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
     sudo apt-get update --assume-yes
-    sudo apt-get upgrade --assume-yes
-    sudo apt-get install --assume-yes wget curl
+    sudo apt-get dist-upgrade --assume-yes
 
     # Makedeb requires a newer version of bash than is present on Ubuntu 16.10.
-    # Download and compile a copy of bash 5.1 so that makedeb will work.
-    curl --location --remote-name --insecure http://ftp.gnu.org/gnu/bash/bash-5.1.16.tar.gz
-    if ! echo "5bac17218d3911834520dad13cd1f85ab944e1c09ae1aba55906be1f8192f558 bash-5.1.16.tar.gz" | sha256sum --check; then
-      echo "Cannot validate bash download: sha256 checksum failed"
-      exit 1
-    fi
+    # Compile a copy of bash 5.1 so that makedeb will work.
     tar xf bash-5.1.16.tar.gz
     cd bash-5.1.16 || exit 1
     ./configure
@@ -34,12 +28,6 @@ function perform_general_setup(){
       
 
     # Install makedeb to ease management of packages
-    curl --location --remote-name --insecure https://github.com/makedeb/makedeb/archive/refs/tags/v11.0.1-1-stable.tar.gz
-
-    if ! echo "44844c2fbdc0fc70203f6cefe65ae6badd240b841f77ba6e4d28c884e0c4c28a  v11.0.1-1-stable.tar.gz" | sha256sum --check; then
-        echo "Cannot validate makedeb download: sha256 checksum failed"
-        exit 1
-    fi
     tar xf v11.0.1-1-stable.tar.gz
     cd makedeb-11.0.1-1-stable/ || exit 1
     make prepare
