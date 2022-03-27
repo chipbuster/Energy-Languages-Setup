@@ -1,0 +1,21 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-csharp
+pkgver=1.0.1
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="C# for Energy Languages"
+url="https://dotnet.microsoft.com/en-us/download/dotnet/1.0"
+depends=()
+source=('dotnet-dev-ubuntu.16.10-x64.1.0.0-preview2-1-003177.tar.gz')
+sha256sums=('835bfcb0cf56457a7c5f953f5fd7d6a37b7a68eb23dc0fb3d9161def833345ea')
+
+build() {
+    return 0 # This is a binary package: no build required
+}
+
+package() {
+    mkdir -p "${pkgdir}/opt" "${pkgdir}/usr/bin"
+    cp -rf "${srcdir}/shared/Microsoft.NETCore.App/1.1.0" "${pkgdir}/opt/dotnet-core"
+    ln -sf /opt/dotnet-core/dotnet ${pkgdir}/usr/bin/dotnet
+}
