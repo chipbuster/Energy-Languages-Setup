@@ -12,6 +12,11 @@ function perform_1610_setup(){
     sudo apt-get update --assume-yes
     sudo apt-get dist-upgrade --assume-yes
 
+    # These installations can be done in their default locations (/usr/local/bin)
+    # even though we install system versions with apt later. This is because
+    # makedeb is made of shell scripts, and will use the default path on Ubunutu,
+    # where /usr/local comes before other /usr directories.
+
     # Makedeb requires a newer version of bash than is present on Ubuntu 16.10.
     # Compile a copy of bash 5.1 so that makedeb will work.
     tar xf bash-5.1.16.tar.gz
@@ -22,8 +27,7 @@ function perform_1610_setup(){
     popd || exit 1
 
     # Makedeb also requires a modern version of bsdtar (repo version is too old)
-    # Compile and install that as well. Installing to default (/usr/local/) is
-    # fine since makedeb will pick up on that directory before /usr/bin
+    # Compile and install that as well.
     tar xf libarchive-3.6.0.tar.xz
     pushd libarchive-3.6.0 || exit 1
     ./configure
