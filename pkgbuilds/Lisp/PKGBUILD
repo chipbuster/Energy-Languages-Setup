@@ -1,0 +1,18 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-lisp
+pkgver=1.3.3
+pkgrel=1
+depends=('sbcl')
+makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="Lisp for Energy Languages"
+url="http://www.sbcl.org/"
+
+# A dummy package which "installs" by requiring it as a dependency.
+build() {
+    return 0
+}
+
+package() {
+    return 0
+}
