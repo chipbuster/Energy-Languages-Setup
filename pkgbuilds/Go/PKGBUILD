@@ -1,0 +1,18 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-golang
+pkgver=1.6.3
+pkgrel=1
+depends=('golang')
+makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="Go for EnergyLanguages"
+url="https://go.dev/"
+
+# A dummy package which "installs" by requiring it as a dependency.
+build() {
+    return 0
+}
+
+package() {
+    return 0
+}
