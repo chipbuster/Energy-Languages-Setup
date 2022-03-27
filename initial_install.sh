@@ -47,6 +47,7 @@ if [[ ! -f "/etc/os-release" ]]; then
     echo "ERROR: /etc/os-release not found. Refusing to continue: this is probably not an Ubuntu system."
     exit 1
 else
+    cd /tmp || exit 1
     source "/etc/os-release"
     if [[ $NAME != "Ubuntu" ]]; then
         echo "ERROR: This script is only meant to be run on Ubuntu, but this is $NAME."
