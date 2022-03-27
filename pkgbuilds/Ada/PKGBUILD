@@ -1,0 +1,18 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-ada
+pkgver=6.2.0
+pkgrel=1
+depends=('gnat')
+makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="Ada for EnergyLanguages"
+url="https://www.gnu.org/software/gnat/"
+
+# A dummy package which "installs" gnat by requiring it as a dependency.
+build() {
+    return 0
+}
+
+package() {
+    return 0
+}
