@@ -29,7 +29,7 @@ function perform_1610_setup(){
 
 function perform_general_setup(){
     # Install general prerequisites for what we're about to do
-    sudo apt install --assume-yes vim git curl wget build-essential python3-pip python3 valgrind asciidoctor
+    sudo apt install --assume-yes vim git curl wget build-essential python3-pip python3 valgrind asciidoctor bsdtar zstd
 
     # Install makedeb to ease management of packages
     curl --location --remote-name --insecure https://github.com/makedeb/makedeb/archive/refs/tags/v11.0.1-1-stable.tar.gz
@@ -48,7 +48,8 @@ if [[ ! -f "/etc/os-release" ]]; then
     echo "ERROR: /etc/os-release not found. Refusing to continue: this is probably not an Ubuntu system."
     exit 1
 else
-    cd /tmp || exit 1
+    SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+    cd "$SCRIPT_DIR" || exit 1
     source "/etc/os-release"
     if [[ $NAME != "Ubuntu" ]]; then
         echo "ERROR: This script is only meant to be run on Ubuntu, but this is $NAME."
