@@ -4,6 +4,10 @@ This repository setup code for the [Energy Languages](https://github.com/greenso
 with the goal of providing as similar an environment as possible to the 2017
 paper published by the Green Software Lab.[^1]
 
+# Quick Start
+
+TODO
+
 ## Rationale and Background
 
 The Energy Languages benchmark is becoming more commonly cited in discussions
@@ -40,24 +44,10 @@ in the paper are either no longer available or are very difficult to find, and
 even when they can be found, installation on older systems can be challenging
 due to [expiration of SSL certificates in the certificate store](https://askubuntu.com/questions/1366704/how-to-install-latest-ca-certificates-on-ubuntu-14).
 
-This repository is an attempt to rectify this problem. Ideally, once the repository
-is complete, it will have the framework code in order to allow the following:
-
-- Installation of language compilers/runtimes on a native (bare-metal) install
-  of Ubuntu 16.10, downloading the runtimes over the internet from their
-  upstream sites.
-- Installation of language compilers/runtimes on a native (bare-metal) install
-  of Ubuntu 16.10, downloading the runtimes from a single source to avoid
-  issues with SSL expiry.
-- A Dockerfile to build a Docker image for the benchmarks.
-- (Possible extension) Modified Ubuntu 16.10 image which can be directly installed
-  with all languages already present.
-- (Possible extension) Installation of language compilers/runtimes with more
-  modern versions, onto an Ubuntu 22.04-based system.
-
-As of time of writing, I have not decided what the correct approach is for
-doing this (considering using Makedeb, but I need to see if it works on
-older versions of Ubuntu first.)
+This repository is an attempt to rectify this problem. It contains a set of
+bash/python/makedeb scripts which install the language runtimes used in the paper
+at the locations specified in the repository (or as close as I could get---see
+"Language Versions" section for caveats).
 
 ## Language Versions
 
@@ -150,18 +140,25 @@ doesn't actually tell us anything about what version of `tsc` was used. Looking
 at release history, the first version of Typescript to be released after Node 7.9.0
 was Typescript 2.3.1, so I am using that as a guess for the TS compiler version.
 
-## Notes for Ubuntu 16.10 Installation
+## Notes about certificate expiry
 
 Due to SSL certificate expiry, the version of Firefox that comes with Ubuntu 16.10
 can no longer access all of GitHub: specifically, the ability to view files or
 download ZIPs/git repositories no longer works.
 
-If you wish, you can record the URL needed to download this repository via
-HTTPS and manually enter it into a `git clone` command on the machine.
-Alternatively, you may consider downloading the newest version of Firefox from
-www.firefox.com and using that to access the internet instead.
+In order to grab this repository, you can use the following command to grab
+this repository:
 
-In general, `wget` and `curl` may noy be able to successfully verify certificates
+```
+wget --no-check-certificate 'https://github.com/chipbuster/Energy-Languages-Setup/archive/refs/heads/trunk.zip'
+```
+
+If you need to access the internet with a web browser, you can also manually add
+an exception for firefox.com to access the latest version of firefox. These
+Firefox downloads come with their own (modern) certificate stores, so they will
+be able to access most websites.
+
+In general, `wget` and `curl` may not be able to successfully verify certificates
 on 16.10. All scripts and programs in this repository avoid this issue by
 disabling SSL verification and relying on SHA256 hashes of the downloaded files
 to ensure that nothing has been tampered with.
