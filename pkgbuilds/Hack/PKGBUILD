@@ -36,12 +36,12 @@ build() {
   cd "${srcdir}/hhvm"
   mkdir -p "${srcdir}/hhvm/build"
   cd "${srcdir}/hhvm/build"
+  # Gold causes an ICE on Ubuntu 16.10--disable it for this build
   cmake -DMYSQL_UNIX_SOCK_ADDR=/dev/null\
         -DCMAKE_BUILD_TYPE=Release\
         -DCMAKE_INSTALL_PREFIX=/usr\
-        # Gold causes an ICE on Ubuntu 16.10
         -DENABLE_LD_GOLD=OFF\
-        ..
+        "${srcdir}/hhvm"
   make ${MAKEFLAGS}
 }
 
