@@ -11,7 +11,8 @@ source=('hhvm::git+https://github.com/facebook/hhvm.git#commit=8e7759b4b00535d65
 sha256sums=('SKIP')
 
 prepare() {
-  cd hhvm
+  cd "${srcdir}/hhvm"
+
   git submodule init
   git submodule update --init
   
@@ -27,15 +28,19 @@ prepare() {
 }
 
 build() {
-  cd hhvm
-  rm -rf build
-  mkdir build
-  cd build
-  cmake -DMYSQL_UNIX_SOCK_ADDR=/dev/null -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ..
+  cd "${srcdir}/hhvm"
+  mkdir -p "${srcdir}/hhvm/build"
+  cd "${srcdir}/hhvm/build"
+  cmake -DMYSQL_UNIX_SOCK_ADDR=/dev/null\
+        -DCMAKE_BUILD_TYPE=Release\
+        -DCMAKE_INSTALL_PREFIX=/usr\
+        # Gold causes an ICE on 16.10
+        -DENABLE_LD_GOLD=OFF\
+        ..
   make ${MAKEFLAGS}
 }
 
 package() {
-    cd hhvm
+    cd "${srcdir}/hhvm/build"
     make ${MAKEFLAGS} DESTDIR="$pkgdir" install
 }
