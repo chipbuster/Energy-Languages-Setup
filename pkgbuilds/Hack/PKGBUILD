@@ -10,6 +10,11 @@ depends=('aspcud' 'autoconf' 'automake' 'binutils-dev' 'bison' 'build-essential'
 source=('hhvm::git+https://github.com/facebook/hhvm.git#commit=8e7759b4b00535d65969dec6a56a03b4ed238b35')
 sha256sums=('SKIP')
 
+# This package *may* need to be installed before OCaml. The default scripts will
+# likely go in alphabetical order, but if you're seeing weird OCaml issues, you
+# might need to investigate the OCaml flags in CMake--the OCaml installed by
+# this repo don't seem to play well with this build.
+
 prepare() {
   cd "${srcdir}/hhvm"
 
@@ -23,7 +28,7 @@ prepare() {
   popd
 
   # Makedeb does not correctly deal with depends and makedepends. Install things
-  # manually in prepare
+  # manually in preparation
   sudo apt-get install -y 'aspcud' 'autoconf' 'automake' 'binutils-dev' 'bison' 'build-essential' 'cmake' 'curl' 'debhelper' 'flex' 'g++' 'gawk' 'git' 'gperf' 'libboost-all-dev' 'libbz2-dev' 'libc-client-dev' 'libc-client2007e-dev' 'libcap-dev' 'libcurl4-openssl-dev' 'libdwarf-dev' 'libedit-dev' 'libelf-dev' 'libevent-dev' 'libexpat-dev' 'libgd-dev' 'libgmp3-dev' 'libgoogle-glog-dev' 'libgoogle-perftools-dev' 'libiberty-dev' 'libiconv-hook-dev' 'libicu-dev' 'libinotifytools0-dev' 'libjemalloc-dev' 'libkrb5-dev' 'libldap2-dev' 'libmagickwand-dev' 'libmcrypt-dev' 'libmemcached-dev' 'libncurses-dev' 'libnotify-dev' 'libnuma-dev' 'libonig-dev' 'libpcre3-dev' 'libpq-dev' 'libre2-dev' 'libsodium-dev' 'libsqlite3-dev' 'libssl-dev' 'libtbb-dev' 'libtool' 'libxml2-dev' 'libxslt1-dev' 'libyaml-dev' 'python3' 're2c' 'rsync' 'tzdata' 'unzip' 'wget' 'zlib1g-dev' 'libreadline-dev'
 }
 
@@ -34,7 +39,7 @@ build() {
   cmake -DMYSQL_UNIX_SOCK_ADDR=/dev/null\
         -DCMAKE_BUILD_TYPE=Release\
         -DCMAKE_INSTALL_PREFIX=/usr\
-        # Gold causes an ICE on 16.10
+        # Gold causes an ICE on Ubuntu 16.10
         -DENABLE_LD_GOLD=OFF\
         ..
   make ${MAKEFLAGS}

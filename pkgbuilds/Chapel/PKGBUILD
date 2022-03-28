@@ -17,6 +17,6 @@ build() {
 }
 
 package() {
-    mkdir "${pkgdir}/usr/local/src/"
+    mkdir -p "${pkgdir}/usr/local/src/"
     mv "${srcdir}/chapel-1.15.0" "${pkgdir}/usr/local/src/chapel-1.15.0"
 }
