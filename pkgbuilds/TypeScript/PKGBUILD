@@ -16,5 +16,5 @@ build() {
 
 package() {
     PATH="/usr/local/src/node-v7.9.0-linux-x64/bin:$PATH"
-    npm install -g --prefix "$pkgdir"/usr "$srcdir"/typescript-2.3.1.tgz
+    npm install -g --prefix "${pkgdir}/usr/local/src/node-v7.9.0-linux-x64/" "${srcdir}/typescript-2.3.1.tgz"
 }
