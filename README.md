@@ -6,7 +6,13 @@ paper published by the Green Software Lab.[^1]
 
 # Quick Start
 
-TODO
+If you do not need to customize the procedure, then you can simply do the following:
+
+- Install a fresh copy of Ubuntu 16.10 on the test machine
+- Download [a copy of this repository](https://github.com/chipbuster/Energy-Languages-Setup/archive/refs/heads/trunk.zip)
+- Download `jdk-8u121-linux-x64.tar.gz` from [the Oracle website](https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html)
+  and place it in `pkgbuilds/Java`.
+- Run `bash install_all.sh` to install the language runtimes.
 
 ## Rationale and Background
 
@@ -64,8 +70,8 @@ The last column of the table tells you how the language is installed in these sc
 - "Source" indicates that the binary builds were not available. Instead, the
   source code for the appropriate version is downloaded and compiled with
   as-close-to-default compilation flags as possible.
-- Any other entry indicates that the exact version of the software was unavailable:
-  see the "Known Mismatches" sections for details.
+- Any other entry indicates that the exact version of the software was unknown
+  or unavailable. See the "Known Mismatches" sections for details.
 
 | Language   | Paper Version          | Repo Version         |
 | ---------- | ---------------------- | -------------------- |
@@ -143,20 +149,17 @@ was Typescript 2.3.1, so I am using that as a guess for the TS compiler version.
 ## Notes about certificate expiry
 
 Due to SSL certificate expiry, the version of Firefox that comes with Ubuntu 16.10
-can no longer access all of GitHub: specifically, the ability to view files or
-download ZIPs/git repositories no longer works.
-
-In order to grab this repository, you can use the following command to grab
-this repository:
+can no longer access GitHub. In order to download this repository, you can use
+the following command:
 
 ```
 wget --no-check-certificate 'https://github.com/chipbuster/Energy-Languages-Setup/archive/refs/heads/trunk.zip'
 ```
 
-If you need to access the internet with a web browser, you can also manually add
-an exception for firefox.com to access the latest version of firefox. These
-Firefox downloads come with their own (modern) certificate stores, so they will
-be able to access most websites.
+If you need to access the internet with a web browser, you can manually add
+an exception for firefox.com (in Firefox) to access the latest version of
+Firefox. These Firefox downloads come with their own (modern) certificate
+stores, so they will be able to access most websites.
 
 In general, `wget` and `curl` may not be able to successfully verify certificates
 on 16.10. All scripts and programs in this repository avoid this issue by
