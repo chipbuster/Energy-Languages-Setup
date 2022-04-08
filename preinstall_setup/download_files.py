@@ -173,6 +173,12 @@ lang_targets = [
         "f3232e83869048f340e6ec438d6e0e0169f1213524d1eba7da9385b3f00dcc86",
         "http://registry.npmjs.org/typescript/-/typescript-2.3.1.tgz",
     ),
+    DownloadTarget(
+        "dep",
+        "icu52",
+        "16f92112105e6170cbfa834d5767a4a7a5a028c0cecf5f3ebd7f4dc46256ea84",
+        "https://github.com/unicode-org/icu/releases/download/release-52-2/icu4c-52_2-src.tgz",
+    ),
 ]
 
 if __name__ == "__main__":
