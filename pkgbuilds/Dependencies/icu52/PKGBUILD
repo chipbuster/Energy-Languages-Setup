@@ -1,0 +1,18 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-icu52
+pkgver=52.2
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="ICU (International Components for Unicode) is a mature, widely used set of C/C++ libraries providing Unicode and globalization support for software applications."
+url="https://icu.unicode.org/download"
+depends=()
+source=('typescript-2.3.1.tgz')
+sha256sums=('16f92112105e6170cbfa834d5767a4a7a5a028c0cecf5f3ebd7f4dc46256ea84')
+
+build() {
+    return 0
+}
+
+package() {
+}
