@@ -1,7 +1,7 @@
-*.tar
-*.tar.*
-*.sh
-*.zip
-
-pkg/**
-src/**
+**/*.tar
+**/*.tgz
+**/*.tar.*
+**/*.sh
+**/*.zip
+**/pkg/**
+**/src/**
