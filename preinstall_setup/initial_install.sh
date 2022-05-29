@@ -8,9 +8,10 @@ fi
 # If we are on a 16.10 release (running for legacy reproducibility), we need to
 # do some things to be able to access repositories.
 function perform_1610_setup(){
-    sudo sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
-    sudo apt-get update --assume-yes
-    sudo apt-get dist-upgrade --assume-yes
+    sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
+    apt-get update --assume-yes
+    apt-get dist-upgrade --assume-yes
+    apt-get install --assume-yes xz-utils build-essential sudo
 
     # These installations can be done in their default locations (/usr/local/bin)
     # even though we install system versions with apt later. This is because
@@ -23,7 +24,7 @@ function perform_1610_setup(){
     pushd bash-5.1.16 || exit 1
     ./configure
     make -j "$(nproc)"
-    sudo make install
+    make install
     popd || exit 1
     rm -rf bash-5.1.16
 
@@ -33,24 +34,24 @@ function perform_1610_setup(){
     pushd libarchive-3.6.0 || exit 1
     ./configure
     make -j "$(nproc)"
-    sudo make install
+    make install
     popd || exit 1
     rm -rf libarchive-3.6.0
 }
 
 function perform_general_setup(){
     # Install general prerequisites for what we're about to do
-    sudo apt install --assume-yes vim git curl wget build-essential python3-pip python3 valgrind asciidoctor\
+    apt install --assume-yes vim git curl wget build-essential python3-pip python3 valgrind asciidoctor\
                                   binutils fakeroot file libarchive-tools lsb-release python3-apt bsdtar zstd\
-                                  cmake jq
+                                  cmake jq sudo python3
 
     # Install makedeb to ease management of packages
     pushd makedeb-11.0.1-1-stable || exit 1
     make prepare
-    sudo make package
+    make package
 
     # Set parallelism to max available
-    echo "MAKEFLAGS=-j$(nproc)" | sudo tee -a /etc/makepkg.conf
+    echo "MAKEFLAGS=-j$(nproc)" |  tee -a /etc/makepkg.conf
     popd || exit 1
 }
 
