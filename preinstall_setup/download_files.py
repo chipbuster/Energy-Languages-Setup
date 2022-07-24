@@ -161,6 +161,14 @@ lang_targets = [
         "835bfcb0cf56457a7c5f953f5fd7d6a37b7a68eb23dc0fb3d9161def833345ea",
         "https://download.microsoft.com/download/A/F/6/AF610E6A-1D2D-47D8-80B8-F178951A0C72/Binaries/dotnet-dev-ubuntu.16.10-x64.1.0.0-preview2-1-003177.tar.gz",
     ),
+    # We need a second target because the Microsoft dotnet downloads appear to be screwy
+    # and don't bundle the correct runtimes (honestly, I suspect they have the wrong
+    # downloads on their page, but we'll deal with that later)
+    DownloadTarget(
+        "Dotnet",
+        "d462661db3f8b9a8b4435b03114c90190b3f5bb30fa02617c5c6f99af5b3d458",
+        "https://download.microsoft.com/download/B/0/0/B00543E8-54D9-4D4A-826B-84348956AA75/dotnet-ubuntu-x64.1.0.1.tar.gz",
+    ),
     DownloadTarget(
         "lang",
         "Pascal",

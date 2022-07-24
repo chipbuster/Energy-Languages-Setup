@@ -6,11 +6,36 @@ pkgrel=1
 arch=('x86_64')
 pkgdesc="C# and F# for Energy Languages"
 url="https://dotnet.microsoft.com/en-us/download/dotnet/1.0"
+# TODO: Depends on icu52, but don't list for now to accelerate development
 depends=()
-source=('dotnet-dev-ubuntu.16.10-x64.1.0.0-preview2-1-003177.tar.gz')
-sha256sums=('835bfcb0cf56457a7c5f953f5fd7d6a37b7a68eb23dc0fb3d9161def833345ea')
+source=('dotnet-dev-ubuntu.16.10-x64.1.0.0-preview2-1-003177.tar.gz'
+        'dotnet-ubuntu-x64.1.0.1.tar.gz')
+noextract=('dotnet-dev-ubuntu.16.10-x64.1.0.0-preview2-1-003177.tar.gz'
+        'dotnet-ubuntu-x64.1.0.1.tar.gz')
+sha256sums=('835bfcb0cf56457a7c5f953f5fd7d6a37b7a68eb23dc0fb3d9161def833345ea'
+            'd462661db3f8b9a8b4435b03114c90190b3f5bb30fa02617c5c6f99af5b3d458')
 options=('staticlibs') # Required or makepkg helpfully strips out required files
+
 # This provides the runtimes for both C# and F#.
+#
+# The downloads on the Microsoft page appear to be screwed up: all dotnet sdk
+# versions below a certain point download a dotnet-1.0.0 preview binary, but
+# with different versions of a .NET runtime. This means that downloading the
+# dotnet SDK doesn't let you run the binaries you built (needs a different
+# runtime). To alleviate this, we download the preview along with the runtimes,
+# then unpack them appropriately.
+#
+# Because Microsoft doesn't make the tarballs extract into a subdirectory, we
+# can't necessarily rely on makedeb to extract things in the correct order, so
+# we ask it not to extract and elect to do it ourselves.
+
+prepare(){
+    rm -rf "${srcdir}"
+    mkdir -p "${srcdir}/dotnet-sdk-1.0.0"
+    mkdir -p "${srcdir}/dotnet-runtime-1.0.1"
+    tar xf "../dotnet-dev-ubuntu.16.10-x64.1.0.0-preview2-1-003177.tar.gz" -C "${srcdir}/dotnet-sdk-1.0.0/" 
+    tar xf "../dotnet-ubuntu-x64.1.0.1.tar.gz" -C "${srcdir}/dotnet-runtime-1.0.1/" 
+}
 
 build() {
     return 0 # This is a binary package: no build required
@@ -18,6 +43,7 @@ build() {
 
 package() {
     mkdir -p "${pkgdir}/opt" "${pkgdir}/usr/bin"
-    cp -rf "$srcdir" "${pkgdir}/opt/dotnet"
+    cp -rf "$srcdir/dotnet-sdk-1.0.0/" "${pkgdir}/opt/dotnet"
     ln -sf /opt/dotnet/dotnet "${pkgdir}/usr/bin/dotnet"
+    cp -rf "$srcdir/dotnet-runtime-1.0.1/shared/Microsoft.NETCore.App/1.0.1" "${pkgdir}/opt/dotnet/shared/Microsoft.NETCore.App/"
 }
