@@ -1,0 +1,24 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-icu52
+pkgver=52
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="libicu for EnergyLanguages"
+url="https://icu.unicode.org/download/52"
+depends=()
+source=('dotnet-dev-ubuntu.16.10-x64.1.0.0-preview2-1-003177.tar.gz')
+sha256sums=('icu4c-52_2-src.tgz')
+options=('staticlibs') # Required or makepkg helpfully strips out required files
+# This provides the runtimes for both C# and F#.
+
+build() {
+    cd "${srcdir}/icu/source"
+    ./configure --prefix=${pkgdir}
+    make ${MAKEFLAGS}
+}
+
+package() {
+    cd "${srcdir}/icu/source"
+    make ${MAKEFLAGS} install
+}
