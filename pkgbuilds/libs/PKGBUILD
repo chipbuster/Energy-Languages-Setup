@@ -1,0 +1,21 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+# This PKGBUILD contains libraries which are not required for the language's
+# compiler/runtimes, but ones which are required by the compilation scripts
+# for the Energy Languages repo
+pkgname=energy-languages-complibs
+pkgver=1.0.0
+pkgrel=1
+arch=('x86_64')
+pkgdesc="Dependencies for compilation of programs"
+depends=(
+    'libapr1-dev'   # Needed by some of the Ada benchmarks
+    'libhts-dev'    # Needed by C benchmarks
+)
+
+build() {
+    return 0
+}
+
+package() {
+    return 0
+}
