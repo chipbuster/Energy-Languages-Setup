@@ -36,13 +36,13 @@ WORKDIR /home/user/preinstall_setup/libarchive-3.6.0
 RUN ./configure && make -j16 && make install
 
 # Additional setup for all ubuntu versions
-RUN apt-get install --assume-yes vim git curl wget build-essential python3-pip python3 valgrind asciidoctor\
+RUN apt-get install --assume-yes vim git curl wget build-essential python3-pip valgrind asciidoctor\
             binutils fakeroot file libarchive-tools lsb-release python3-apt bsdtar zstd\
-            cmake jq sudo python3
+            cmake jq sudo python3 python
 
 # Install makedeb
 WORKDIR /home/user/preinstall_setup/makedeb-11.0.1-1-stable
-RUN make prepare && make package
+RUN CURRENT_VERSION=11.0.1 TARGET=apt RELEASE=alpha make prepare && make package
 RUN echo "MAKEFLAGS=-j32" | tee -a /etc/makepkg.conf
 #### End Initial Setup
 
@@ -50,44 +50,68 @@ RUN echo "user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 USER user
 
 WORKDIR /home/user/
-COPY --chown=user /pkgbuilds/ .
-COPY --chown=user /prerequisites/ .
-RUN git clone https://github.com/greensoftwarelab/Energy-Languages.git
+COPY --chown=user /pkgbuilds/ ./pkgbuilds
+COPY --chown=user gen_deb_file.sh gen_deb_file.sh
 
-WORKDIR /home/user/pkgbuilds
-RUN python3 download_files.py
+# This line should be uncommented if you need to download all the files for the
+# first time.
+#RUN python3 download_files.py
 
 WORKDIR /home/user
+RUN mkdir debs
 
 # Build deps/langs. Ordered so that the more problematic ones are built last for
 # maximum reusability
-RUN bash gen_deb_file.sh pkgbuilds/Ada
-RUN bash gen_deb_file.sh pkgbuilds/C
-RUN bash gen_deb_file.sh pkgbuilds/C++
-RUN bash gen_deb_file.sh pkgbuilds/Chapel
-RUN bash gen_deb_file.sh pkgbuilds/Dart
-RUN bash gen_deb_file.sh pkgbuilds/Dotnet
-RUN bash gen_deb_file.sh pkgbuilds/Erlang
-RUN bash gen_deb_file.sh pkgbuilds/Fortran
-RUN bash gen_deb_file.sh pkgbuilds/Go
-RUN bash gen_deb_file.sh pkgbuilds/Hack
-RUN bash gen_deb_file.sh pkgbuilds/Haskell
-RUN bash gen_deb_file.sh pkgbuilds/Java
-RUN bash gen_deb_file.sh pkgbuilds/JavaScript
-RUN bash gen_deb_file.sh pkgbuilds/JRuby
-RUN bash gen_deb_file.sh pkgbuilds/Lisp
-RUN bash gen_deb_file.sh pkgbuilds/Lua
-RUN bash gen_deb_file.sh pkgbuilds/OCaml
-RUN bash gen_deb_file.sh pkgbuilds/Pascal
-RUN bash gen_deb_file.sh pkgbuilds/Perl
-RUN bash gen_deb_file.sh pkgbuilds/PHP
-RUN bash gen_deb_file.sh pkgbuilds/Python
-RUN bash gen_deb_file.sh pkgbuilds/Racket
-RUN bash gen_deb_file.sh pkgbuilds/Ruby
-RUN bash gen_deb_file.sh pkgbuilds/Rust
-RUN bash gen_deb_file.sh pkgbuilds/Swift
+RUN bash gen_deb_file.sh ./pkgbuilds/Ada
+RUN bash gen_deb_file.sh ./pkgbuilds/C
+RUN bash gen_deb_file.sh ./pkgbuilds/C++
+RUN bash gen_deb_file.sh ./pkgbuilds/Chapel
+RUN bash gen_deb_file.sh ./pkgbuilds/Dart
+RUN bash gen_deb_file.sh ./pkgbuilds/Dotnet
+RUN bash gen_deb_file.sh ./pkgbuilds/Erlang
+RUN bash gen_deb_file.sh ./pkgbuilds/Fortran
+RUN bash gen_deb_file.sh ./pkgbuilds/Go
+RUN bash gen_deb_file.sh ./pkgbuilds/Hack
+RUN bash gen_deb_file.sh ./pkgbuilds/Haskell
+RUN bash gen_deb_file.sh ./pkgbuilds/Java
+RUN bash gen_deb_file.sh ./pkgbuilds/JavaScript
+RUN bash gen_deb_file.sh ./pkgbuilds/JRuby
+RUN bash gen_deb_file.sh ./pkgbuilds/Lisp
+RUN bash gen_deb_file.sh ./pkgbuilds/Lua
+RUN bash gen_deb_file.sh ./pkgbuilds/OCaml
+RUN bash gen_deb_file.sh ./pkgbuilds/Pascal
+RUN bash gen_deb_file.sh ./pkgbuilds/Perl
+RUN bash gen_deb_file.sh ./pkgbuilds/PHP
+RUN bash gen_deb_file.sh ./pkgbuilds/Python
+RUN bash gen_deb_file.sh ./pkgbuilds/Racket
+RUN bash gen_deb_file.sh ./pkgbuilds/Ruby
+RUN bash gen_deb_file.sh ./pkgbuilds/Rust
+RUN bash gen_deb_file.sh ./pkgbuilds/Swift
 
-# Do not install yet
-# RUN bash gen_deb_file.sh pkgbuilds/TypeScript
+USER root
+RUN apt-get install -f  ./debs/*
+
+# TypeScript needs to be installed after JavaScript's npm dependency
+USER user
+RUN bash gen_deb_file.sh ./pkgbuilds/TypeScript
+USER root
+RUN apt-get install -f ./debs/energy-languages-typescript_2.3.1-1_amd64.deb
+USER user
+
+# TypeScript relies on being able to find node: add this to the PATH to avoid sadness
+ENV PATH="${PATH}:/usr/local/src/node-v7.9.0-linux-x64/bin"
+
+# Let's install prerequisites
+WORKDIR /home/user
+COPY --chown=user /prerequisites/ ./prerequisites
+RUN bash gen_deb_file.sh ./prerequisites/aptreqs
+RUN bash gen_deb_file.sh ./prerequisites/icu52
+
+USER root
+RUN apt-get install --assume-yes -f ./debs/*
+USER user
+
+# Install the benchmarking code
+RUN git clone https://github.com/greensoftwarelab/Energy-Languages.git
 
 ENTRYPOINT ["bash", "-l"]

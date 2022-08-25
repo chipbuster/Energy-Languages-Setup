@@ -18,6 +18,10 @@ The steps it takes are:
   of Ubuntu, but is required for compatibility on older versions of Ubuntu. This
   custom version also removes certain flags which cause issues with older tools.
 
+NOTE: this version of makedeb is pretty busted, because makedeb was written to
+run on Ubuntu 20.04 and we're taking it back to Ubuntu 16.10. The version here
+has been patched
+
 # File Downloader
 
 The `download_files.py` script downloads the files needed by makedeb to install

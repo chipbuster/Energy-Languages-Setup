@@ -32,7 +32,9 @@ for i in sys.argv[1:]:
         package = i.split(relationship_operator)
         pkgname = package[0]
         pkgver = package[1]
-        package_string = f"{pkgname} ({relationship_operator_formatted} {pkgver})"
+        package_string = (
+            pkgname + " (" + relationship_operator_formatted + " " + pkgver + ")"
+        )
     else:
         pkgname = i
         pkgver = None

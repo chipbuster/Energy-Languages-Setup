@@ -1,0 +1,28 @@
+# Maintainer: Kevin Song <k c s o n g at utexas dot edu>
+pkgname=energy-languages-aptreqs
+pkgver=1
+pkgrel=1
+#makedepends=('build-essential')
+arch=('x86_64')
+pkgdesc="APT-available compilation reqs for EnergyLanguages"
+url=""
+
+# This is a dummy package to install libraries which are not needed to build the
+# languages themselves, but are required at runtime to link for the bench programs
+# Each dep will have a comment noting at least one language which it is required
+# for.
+
+depends=(
+    'libapr1-dev'  # Req by: Ada BinaryTrees
+    'libhts-dev'   # Req by: C k-nucleotide
+
+)
+# This provides the runtimes for both C# and F#.
+
+build() {
+    true
+}
+
+package() {
+    true
+}

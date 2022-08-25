@@ -5,7 +5,7 @@ import hashlib
 
 # Get the path to the pkgbuilds directory
 filepath = os.path.abspath(__file__)
-pkgbuild_dir = os.path.join(os.path.dirname(os.path.dirname(filepath)), "pkgbuilds")
+pkgbuild_dir = os.path.dirname(filepath)
 
 # Spoof a curl client so that some websites don't immediately 403 us
 default_header = {"user-agent": "curl/7.82.0", "accept": "*/*"}
@@ -67,8 +67,8 @@ class DownloadTarget(object):
 targets = [
     DownloadTarget(
         "icu52",
-        "e00c9c13875239aae4b0c8f9fa6fc8df8285568d318c13c5fe67fef883e9cabd",
-        "https://download.swift.org/swift-4.2.4-release/ubuntu1604/swift-4.2.4-RELEASE/swift-4.2.4-RELEASE-ubuntu16.04.tar.gz",
+        "16f92112105e6170cbfa834d5767a4a7a5a028c0cecf5f3ebd7f4dc46256ea84",
+        "https://github.com/unicode-org/icu/releases/download/release-52-2/icu4c-52_2-src.tgz",
     ),
 ]
 

@@ -7,8 +7,8 @@ arch=('x86_64')
 pkgdesc="libicu for EnergyLanguages"
 url="https://icu.unicode.org/download/52"
 depends=()
-source=('dotnet-dev-ubuntu.16.10-x64.1.0.0-preview2-1-003177.tar.gz')
-sha256sums=('icu4c-52_2-src.tgz')
+source=('icu4c-52_2-src.tgz')
+sha256sums=('16f92112105e6170cbfa834d5767a4a7a5a028c0cecf5f3ebd7f4dc46256ea84')
 options=('staticlibs') # Required or makepkg helpfully strips out required files
 # This provides the runtimes for both C# and F#.
 

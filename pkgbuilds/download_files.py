@@ -5,7 +5,7 @@ import hashlib
 
 # Get the path to the pkgbuilds directory
 filepath = os.path.abspath(__file__)
-pkgbuild_dir = os.path.join(os.path.dirname(os.path.dirname(filepath)), "pkgbuilds")
+pkgbuild_dir = os.path.dirname(filepath)
 
 # Spoof a curl client so that some websites don't immediately 403 us
 default_header = {"user-agent": "curl/7.82.0", "accept": "*/*"}
