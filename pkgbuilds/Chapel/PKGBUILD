@@ -7,16 +7,43 @@ arch=('x86_64')
 pkgdesc="Chapel for Energy Languages"
 url="https://chapel-lang.org/docs/1.15/usingchapel/QUICKSTART.html"
 # https://github.com/chapel-lang/chapel/releases/download/1.15.0/chapel-1.15.0.tar.gz
-source=('chapel-1.15.0.tar.gz')  
-sha256sums=('c7549124d90504027212a99176635b215ab11c12eadc995e89e7d019529d796f')
+source=('chapel-1.15.0.tar.gz' 'chapel_vars.sh')
+sha256sums=('c7549124d90504027212a99176635b215ab11c12eadc995e89e7d019529d796f'
+            '7126ad311991368dc52483fa58bc8444d132252e6d0ad5957d487c8835b59fea')
+makedepends=('libgmp-dev')
+options=('staticlibs' 'libtool' '!strip')
+
+# We must include the libtool files or the Chapel compiler cannot find the
+# correct libraries at compile-time
 
 build() {
     cd "${srcdir}/chapel-1.15.0"
     source util/setchplenv.bash
+
+    # Using default makepkg.conf values breaks the build. Fun!
+    export CFLAGS=""
+    export CXXFLAGS=""
+    export LDFLAGS=""
+    export CHPL_GMP=system
+
     make ${MAKEFLAGS}
 }
 
+check(){
+    cd "${srcdir}/chapel-1.15.0"
+    source util/setchplenv.bash
+    make check -j1
+}
+
 package() {
+    # In principle this should be included with the installer. Can do that later
+    # but this works for the time being.
+    # echo -e "export CHPL_GMP=system" > /etc/profile.d/chapel_vars.sh
+
+    cd "${srcdir}/chapel-1.15.0"
     mkdir -p "${pkgdir}/usr/local/src/"
     mv "${srcdir}/chapel-1.15.0" "${pkgdir}/usr/local/src/chapel-1.15.0"
+
+    mkdir -p "${pkgdir}/etc/profile.d/"
+    cp "${srcdir}/chapel_vars.sh" "${pkgdir}/etc/profile.d/chapel_vars.sh"
 }
