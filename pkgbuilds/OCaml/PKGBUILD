@@ -13,11 +13,11 @@ sha256sums=('e5d8a6f629020c580473d8afcfcb06c3966d01929f7b734f41dc0c737cd8ea3f')
 build() {
     cd "${srcdir}/ocaml-4.05.0"
     ./configure --prefix /usr
-    make ${MAKEFLAGS} world
+    make ${MAKEFLAGS} world.opt
 }
 
 package() {
     cd "${srcdir}/ocaml-4.05.0"
-    mkdir -p "${pkgdir}/usr"
+    mkdir -p "${pkgdir}/usr/local/"{bin,include,share,lib}
     make DESTDIR="${pkgdir}" install
 }

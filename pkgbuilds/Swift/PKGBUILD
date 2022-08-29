@@ -19,4 +19,5 @@ package() {
     mkdir -p "${pkgdir}/usr/local/src/"
     mv "${srcdir}/swift-4.2.4-RELEASE-ubuntu16.04"\
        "${pkgdir}/usr/local/src/swift-2017-04-13-a-ubuntu16.10"
+    chmod -R a=u "${pkgdir}/usr/local/src/swift-2017-04-13-a-ubuntu16.10"
 }

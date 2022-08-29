@@ -113,5 +113,8 @@ USER user
 
 # Install the benchmarking code
 RUN git clone https://github.com/greensoftwarelab/Energy-Languages.git
+# Remove languages which were not present in the original benchmarks
+RUN rm -rf Energy-Languages/Julia
+RUN rm -rf Energy-Languages/Smalltalk
 
 ENTRYPOINT ["bash", "-l"]

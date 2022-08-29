@@ -2,17 +2,22 @@
 pkgname=energy-languages-python
 pkgver=3.5.2
 pkgrel=1
-depends=('python3' 'python3-pip')
+depends=()
 # makedepends=('build-essential')
 arch=('x86_64')
 pkgdesc="Python for EnergyLanguages"
+source=('Python-3.6.1.tar.xz')
+sha256sums=('a01810ddfcec216bcdb357a84bfaafdfaa0ca42bbdaa4cb7ff74f5a9961e4041')
 url="https://www.python.org/"
 
 # A dummy package which "installs" by requiring it as a dependency.
 build() {
-    return 0
+    cd "${srcdir}/Python-3.6.1"
+    ./configure --prefix=/usr/local/src/Python-3.6.1/
+    make ${MAKEFLAGS}
 }
 
 package() {
-    return 0
+    cd "${srcdir}/Python-3.6.1"
+    make install DESTDIR="${pkgdir}"
 }

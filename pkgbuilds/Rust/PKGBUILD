@@ -17,5 +17,5 @@ build() {
 package() {
     cd "${srcdir}/rust-1.16.0-x86_64-unknown-linux-gnu"
     mkdir -p "${pkgdir}/usr/local/src/rust-1.16.0"
-    ./install.sh  --prefix=/usr/local/src/rust-1.16.0 --destdir="${pkgdir}/usr/local/src/rust-1.16.0"
+    ./install.sh  --prefix=/usr/local/src/rust-1.16.0 --destdir="${pkgdir}"
 }

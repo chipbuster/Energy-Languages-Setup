@@ -6,10 +6,11 @@ pkgrel=1
 arch=('x86_64')
 pkgdesc="Haskell for Energy Languages"
 url="https://www.haskell.org/ghc/"
-depends=()
-source=('ghc-8.0.2-x86_64-deb8-linux.tar.xz')
+depends=('llvm-3.7')
+source=('ghc-8.0.2-x86_64-deb8-linux.tar.xz' 'llvm-vars.sh')
 noextract=('ghc-8.0.2-x86_64-deb8-linux.tar.xz')
-sha256sums=('5ee68290db00ca0b79d57bc3a5bdce470de9ce9da0b098a7ce6c504605856c8f')
+sha256sums=('5ee68290db00ca0b79d57bc3a5bdce470de9ce9da0b098a7ce6c504605856c8f'
+            'b59c11000b9316159afe9a8373c72979477a81442c45e0f15695cf322e167f0b')
 
 build() {
     tar xf ghc-8.0.2-x86_64-deb8-linux.tar.xz

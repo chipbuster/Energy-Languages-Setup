@@ -20,5 +20,5 @@ package() {
     installdir="${pkgdir}/usr/local/src/ruby"
     mkdir -p "${installdir}"
     cd "${srcdir}/ruby-2.4.1"
-    make DESTDIR="$installdir" install
+    make DESTDIR="${pkgdir}" install
 }

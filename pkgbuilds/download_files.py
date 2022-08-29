@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import ssl
 import urllib.request
 import os
@@ -145,6 +147,11 @@ targets = [
         "TypeScript",
         "f3232e83869048f340e6ec438d6e0e0169f1213524d1eba7da9385b3f00dcc86",
         "http://registry.npmjs.org/typescript/-/typescript-2.3.1.tgz",
+    ),
+    DownloadTarget(
+        "Python",
+        "a01810ddfcec216bcdb357a84bfaafdfaa0ca42bbdaa4cb7ff74f5a9961e4041",
+        "https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tar.xz",
     ),
 ]
 
