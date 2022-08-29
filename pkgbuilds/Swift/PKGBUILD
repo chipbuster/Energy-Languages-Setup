@@ -6,7 +6,9 @@ pkgrel=1
 arch=('x86_64')
 pkgdesc="Swift for Energy Languages"
 url="https://developer.apple.com/swift/"
-depends=()
+depends=( 'binutils' 'git   ' 'libc6-dev' 'libcurl3' 'libedit2' 'libgcc-5-dev' 'libpython2.7' 'libsqlite3-0' 'libstdc++-5-dev' 'libxml2' 'pkg-config' 'tzdata' 'zlib1g-dev')
+
+
 # https://download.swift.org/swift-4.2.4-release/ubuntu1604/swift-4.2.4-RELEASE/swift-4.2.4-RELEASE-ubuntu16.04.tar.gz
 source=('swift-4.2.4-RELEASE-ubuntu16.04.tar.gz')
 sha256sums=('e00c9c13875239aae4b0c8f9fa6fc8df8285568d318c13c5fe67fef883e9cabd')

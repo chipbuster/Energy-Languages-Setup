@@ -12,8 +12,9 @@ sha256sums=('e5d8a6f629020c580473d8afcfcb06c3966d01929f7b734f41dc0c737cd8ea3f')
 
 build() {
     cd "${srcdir}/ocaml-4.05.0"
-    ./configure --prefix /usr
-    make ${MAKEFLAGS} world.opt
+    ./configure --prefix /usr -no-ocamldoc
+    make ${MAKEFLAGS} world
+    make ${MAKEFLAGS} opt.opt
 }
 
 package() {

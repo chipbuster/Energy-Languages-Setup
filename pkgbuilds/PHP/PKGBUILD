@@ -12,12 +12,20 @@ sha256sums=('71514386adf3e963df087c2044a0b3747900b8b1fc8da3a99f0a0ae9180d300b')
 
 build() {
     cd "${srcdir}/php-7.1.4"
-    ./configure --prefix=/usr
+    ./configure --prefix=/usr --enable-shmop --enable-pcntl --with-zlib --with-readline\
+                --with-gmp
     make ${MAKEFLAGS}
 }
 
 package() {
     cd "${srcdir}/php-7.1.4"
-    mkdir -p "${pkgdir}/usr/{include,bin,lib,share}"
-    make INSTALL_ROOT="${pkgdir}/usr/"  install
+    make INSTALL_ROOT="${pkgdir}" install
+    cp php.ini-development ${pkgdir}/usr/lib/php.ini
+    cd ${pkgdir}
+    rm -rf '.channels'
+    rm -rf '.depdb'
+    rm -rf '.depdblock'
+    rm -rf '.filemap'
+    rm -rf '.lock'
+    rm -rf '.registry'
 }
