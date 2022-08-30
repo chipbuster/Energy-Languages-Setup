@@ -39,8 +39,10 @@ class DownloadTarget(object):
             self.fname = os.path.join(self.dirname, filename)
         self.hash = hash
 
-    def download_file(self):
+    def download_file(self, override=False):
         req = urllib.request.Request(self.url)
+        if os.path.isfile(self.fname) and not override:
+            return
         for (k, v) in default_header.items():
             req.add_header(k, v)
         response = urllib.request.urlopen(req, context=default_ssl_ctx)

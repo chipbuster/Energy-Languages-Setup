@@ -113,8 +113,13 @@ USER user
 
 # Install the benchmarking code
 RUN git clone https://github.com/greensoftwarelab/Energy-Languages.git
-# Remove languages which were not present in the original benchmarks
+# Remove languages which were not present in the original benchmarks or busted
 RUN rm -rf Energy-Languages/Julia
 RUN rm -rf Energy-Languages/Smalltalk
+# This is completely broken--binaries won't run and present at least 3 different
+# errors based on what you try to do to fix it
+RUN rm -rf Energy-Languages/Swift
+
+RUN pip3 install lazyme
 
 ENTRYPOINT ["bash", "-l"]
