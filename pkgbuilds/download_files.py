@@ -4,6 +4,7 @@ import ssl
 import urllib.request
 import os
 import hashlib
+import tempfile
 
 import subprocess
 
@@ -74,31 +75,50 @@ class GitTarget(object):
     def __init__(self, langname, repo_url, commit_hash=None, filename=None):
         self.lang = langname
         self.dirname = os.path.join(pkgbuild_dir, langname)
-        self.url = ".".join(repo_url.split(".")[0:-1])  # Remove .git suffix
+        self.git_stem = ".".join(repo_url.split(".")[0:-1]).split("/")[-1]
+        self.repo_path = os.path.join(tempfile.gettempdir(), self.git_stem)
+        self.url = repo_url
         if filename is None:
-            self.fname = os.path.join(self.dirname, self.url.split("/")[-1]) + ".tar.gz"
+            self.fname = os.path.join(self.dirname, self.git_stem) + ".tar.xz"
         else:
             self.fname = os.path.join(self.dirname, filename)
         self.commit = commit_hash
 
     def checkout_repo(self):
-        subprocess.run(["git", "clone", self.url, "git_repo"])
+        if os.path.exists(self.repo_path):
+            print("[ERR]: There is already an item at " + self.repo_path)
+            print("This will cause git clone to fail. Delete it and run again.")
+        subprocess.run(["git", "clone", self.url, self.repo_path]).check_returncode()
         cur_dir = os.getcwd()
-        os.chdir("git_repo")
+        os.chdir(self.repo_path)
         if self.commit is not None:
-            subprocess.run(["git", "checkout", self.commit])
-        subprocess.run(["git", "submodule", "update", "--init", "--recursive"])
+            subprocess.run(["git", "checkout", self.commit]).check_returncode()
+        subprocess.run(
+            ["git", "submodule", "update", "--init", "--recursive"]
+        ).check_returncode()
+
         os.chdir(cur_dir)
 
     def get_with_info(self):
         if os.path.isfile(self.fname):
             return
-        print("Checking out repo " + self.url)
+        print("Checking out repo " + self.url + " to " + self.repo_path)
         if self.commit is not None:
             print("\tCommit hash: " + self.commit)
-        self.checkout_repo()
+        # self.checkout_repo()
 
-        subprocess.run(["tar", "czvf", self.fname, "git_repo"])
+        print("Compressing archive")
+        os.environ["XZ_OPT"] = "-T0"
+        subprocess.run(
+            [
+                "tar",
+                "-C",
+                os.path.dirname(self.repo_path),
+                "-cJvf",
+                self.fname,
+                os.path.basename(self.repo_path),
+            ]
+        ).check_returncode()
 
         cksum = sha256sum(self.fname)
         print("Repo tarball at " + self.fname + " with SHA256 hash " + cksum)
@@ -180,6 +200,11 @@ targets = [
         "Pascal",
         "b5b27fdbc31b1d05b6a898f3c192d8a5083050562b29c19eb9eb018ba4482bd8",
         "https://downloads.sourceforge.net/project/freepascal/Linux/3.0.2/fpc-3.0.2.x86_64-linux.tar?ts=gAAAAABiNqyqJ-rKWKDERLIN7kEGe_fEFqRllTIll0r4AbTB9kAFSZDfIeCI-0mZO_Jj_FSmpnRcd_W_EV8m43QmILXjtzCFzg%3D%3D&r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Ffreepascal%2Ffiles%2FLinux%2F3.0.2%2Ffpc-3.0.2.x86_64-linux.tar%2Fdownload",
+    ),
+    HTTPTarget(
+        "Dotnet",
+        "860a22f2adc783a1ab10cb373109682d32435c76b9045bc9966d097512bec937",
+        "https://download.microsoft.com/download/2/4/A/24A06858-E8AC-469B-8AE6-D0CEC9BA982A/dotnet-ubuntu-x64.1.0.5.tar.gz",
     ),
     HTTPTarget(
         "TypeScript",
