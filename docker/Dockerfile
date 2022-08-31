@@ -122,4 +122,13 @@ RUN rm -rf Energy-Languages/Swift
 
 RUN pip3 install lazyme
 
+# Run additional setup on the benchmarks
+COPY --chown=user prep_scripts prep_scripts
+WORKDIR /home/user/Energy-Languages/CSharp
+RUN bash /home/user/prep_scripts/CSharp/setup.bash
+WORKDIR /home/user/Energy-Languages/FSharp
+RUN bash /home/user/prep_scripts/FSharp/setup.bash
+
+WORKDIR /home/user/
+
 ENTRYPOINT ["bash", "-l"]
